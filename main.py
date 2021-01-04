@@ -4,7 +4,6 @@ import requests
 import random
 import datetime
 import time
-import json
 import math
 
 
@@ -42,9 +41,9 @@ class Music:
         else:
             url = self.api + '?do=login'
         response = requests.post(url, data=data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
-        code = json.loads(response.text)['code']
-        self.name = json.loads(response.text)['profile']['nickname']
-        self.uid = json.loads(response.text)['account']['id']
+        code = response.json()['code']
+        self.name = response.json()['profile']['nickname']
+        self.uid = response.json()['account']['id']
         if code == 200:
             self.error = ''
         else:
@@ -59,7 +58,7 @@ class Music:
     def sign(self):
         url = self.api + '?do=sign'
         response = self.get_response(url, {"r": random.random()})
-        data = json.loads(response.text)
+        data = response.json()
         if data['code'] == 200:
             self.log('签到成功')
         else:
@@ -82,7 +81,7 @@ class Music:
         url = self.api + '?do=detail'
         data = {"uid": self.uid, "r": random.random()}
         response = self.get_response(url, data)
-        data = json.loads(response.text)
+        data = response.json()
         self.level = data['level']
         self.listenSongs = data['listenSongs']
         self.log('获取用户详情成功')
@@ -97,7 +96,7 @@ class Music:
         url = 'https://sc.ftqq.com/' + self.sc_key + '.send'
         self.diyText()  # 构造发送内容
         response = requests.get(url, params={"text": self.title, "desp": self.content})
-        data = json.loads(response.text)
+        data = response.json()
         if data['errno'] == 0:
             self.log('用户:' + self.name + '  Server酱推送成功')
         else:
