@@ -25,14 +25,14 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: 打卡
       run: |
-        uin='${{ secrets.UIN }}'
-        pwd='${{ secrets.PWD }}'
+        user='${{ secrets.USER }}'
+        pwd_md5='${{ secrets.PWD_MD5 }}'
         api='${{ secrets.API }}'
         sckey='${{ secrets.SCKEY }}'
         
         python3 main.py <<EOF
-        ${uin}
-        ${pwd}
+        ${user}
+        ${pwd_md5}
         ${api}
         ${sckey}
         EOF
