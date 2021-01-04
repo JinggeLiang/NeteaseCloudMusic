@@ -8,9 +8,9 @@ import math
 
 
 class Music:
-    def __init__(self, uin, pwd, api, sc_key, country_code=86):
-        self.uin = uin
-        self.pwd = pwd
+    def __init__(self, user, pwd_md5, api, sc_key, country_code=86):
+        self.user = user
+        self.pwd_md5 = pwd_md5
         self.country_code = country_code
         self.sc_key = sc_key
         self.api = api
@@ -35,8 +35,8 @@ class Music:
     """
 
     def login(self):
-        data = {"uin": self.uin, "pwd": self.pwd, "countrycode": self.country_code, "r": random.random()}
-        if '@' in self.uin:
+        data = {"uin": self.user, "pwd": self.pwd_md5, "countrycode": self.country_code, "r": random.random()}
+        if '@' in self.user:
             url = self.api + '?do=email'
         else:
             url = self.api + '?do=login'
@@ -204,9 +204,9 @@ class Music:
 
 
 if __name__ == '__main__':
-    uin = input()
-    pwd = input()
+    user = input()
+    pwd_md5 = input()
     api = input()
     sc_key = input()
-    task = Music(uin, pwd, api, sc_key)
+    task = Music(user, pwd_md5, api, sc_key)
     task.start()
