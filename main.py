@@ -16,6 +16,7 @@ class Music:
         self.sc_key = sc_key
         self.api = api
         self.grade = [10, 40, 70, 130, 200, 400, 1000, 3000, 8000, 20000]
+        self.ls = []
         self.check_api()
 
     """
@@ -151,7 +152,7 @@ class Music:
         time_stamp = datetime.datetime.now()
         print(time_stamp.strftime('%Y.%m.%d-%H:%M:%S') + '   ' + str(text))
         self.time = time_stamp.strftime('%H:%M:%S')
-        self.list.append("- [" + self.time + "]    " + str(text) + "\n\n")
+        self.ls.append("- [" + self.time + "]    " + str(text) + "\n\n")
 
     """
     开始执行
@@ -159,13 +160,12 @@ class Music:
 
     def start(self):
         try:
-            self.list = []
-            self.list.append("- 初始化完成\n\n")
+            self.ls.append("- 初始化完成\n\n")
             self.login()
             self.sign()
             self.detail()
             counter = self.listenSongs
-            self.list.append("- 开始打卡\n\n")
+            self.ls.append("- 开始打卡\n\n")
             for i in range(1, 10):
                 self.daka()
                 # self.log('用户:' + self.name + '  第' + str(i) + '次打卡成功,即将休眠30秒')
@@ -183,9 +183,9 @@ class Music:
             else:
                 self.day = math.ceil((20000 - self.listenSongs) / 300)
 
-            self.list.append("- 打卡结束\n\n")
-            self.list.append("- 消息推送\n\n")
-            self.dakaSongs_list = ''.join(self.list)
+            self.ls.append("- 打卡结束\n\n")
+            self.ls.append("- 消息推送\n\n")
+            self.dakaSongs_list = ''.join(self.ls)
             self.server()
         except Exception as e:
             self.log('用户任务执行中断,请检查账号密码是否正确')
