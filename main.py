@@ -16,6 +16,7 @@ class Music:
         self.sc_key = sc_key
         self.api = api
         self.grade = [10, 40, 70, 130, 200, 400, 1000, 3000, 8000, 20000]
+        self.check_api()
 
     """
     带上用户的cookie去发送数据
@@ -186,8 +187,9 @@ class Music:
             self.list.append("- 消息推送\n\n")
             self.dakaSongs_list = ''.join(self.list)
             self.server()
-        except:
+        except Exception as e:
             self.log('用户任务执行中断,请检查账号密码是否正确')
+            self.log(e)
         else:
             self.log('用户:' + self.name + '  今日任务已完成')
 
