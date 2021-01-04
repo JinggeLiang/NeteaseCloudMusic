@@ -1,0 +1,39 @@
+name: 打卡
+
+on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+#     branches: [ main ]
+  schedule:
+    - cron: 0 1 * * *
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+    - name: Install dependencies
+      run: |
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: 打卡
+      run: |
+        uin='${{ secrets.UIN }}'
+        pwd='${{ secrets.PWD }}'
+        api='${{ secrets.API }}'
+        sckey='${{ secrets.SCKEY }}'
+        
+        python3 main.py <<EOF
+        ${uin}
+        ${pwd}
+        ${api}
+        ${sckey}
+        EOF
