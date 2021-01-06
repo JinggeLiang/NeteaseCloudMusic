@@ -42,12 +42,14 @@ class Music:
             url = self.api + '?do=login'
         response = requests.post(url, data=data, headers={'Content-Type': 'application/x-www-form-urlencoded'})
         code = response.json()['code']
-        self.name = response.json()['profile']['nickname']
-        self.uid = response.json()['account']['id']
         if code == 200:
             self.error = ''
         else:
             self.error = '登录失败，请检查账号'
+            self.log(response.text)
+            return
+        self.name = response.json()['profile']['nickname']
+        self.uid = response.json()['account']['id']
         self.cookies = response.cookies.get_dict()
         self.log('登录成功')
 
