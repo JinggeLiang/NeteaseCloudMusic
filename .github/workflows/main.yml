@@ -28,7 +28,7 @@ jobs:
         user='${{ secrets.USER }}'
         pwd_md5='${{ secrets.PWD_MD5 }}'
         api='${{ secrets.API }}'
-        sckey='${{ secrets.SCKEY }}'
+        sckey=''
         
         python3 main.py <<EOF
         ${user}
